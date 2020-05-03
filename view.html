@@ -1,0 +1,85 @@
+<!doctype html>
+
+<html lang="de">
+<head>
+    <meta charset="utf-8">
+
+    <title>view</title>
+    <style type="text/css">
+        .nocursor {
+            cursor: none;
+        }
+
+        #pswd {
+            width: 300px;
+            height: 40px;
+            visibility: hidden;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    </style>
+    <style type="text/css">
+            html {
+                overflow: auto;
+            }
+
+            html,
+            body,
+            div,
+            iframe {
+                margin: 0px;
+                padding: 0px;
+                height: 100%;
+                border: none;
+            }
+
+            iframe {
+                display: block;
+                width: 100%;
+                border: none;
+                overflow-y: auto;
+                overflow-x: hidden;
+            }
+        </style>
+
+
+
+    <script>
+
+        document.addEventListener('keydown', showPassword);
+
+        function showPassword(e) {
+            if (e.keyCode === 27) {
+                document.getElementById("pswd").style.visibility = "visible";
+                document.getElementById("pswd").focus();
+            }
+        }
+
+        function handle(e) {
+            if (e.keyCode === 13) {
+                const password = document.getElementById('pswd').value;
+                pywebview.api.verifyPassword(password);
+            }
+        }
+    </script>
+
+</head>
+<iframe src="https://en.wikipedia.org/wiki/HTML_element#Frames"
+           frameborder="0"
+           marginheight="0"
+           marginwidth="0"
+           width="100%"
+           height="100%"
+           scrolling="auto">
+ </iframe>
+
+<body class="bg-white near-black tc avenir fw1 ">
+
+<div class="nocursor" id="full_view">
+    <input type="password" id="pswd" placeholder="Enter password" autofocus onkeypress="handle(event)"/>
+</div>
+
+</body>
+</html>
