@@ -1,12 +1,16 @@
 import webview
 import sys
+from threading import *
+import time
+# ----------------------------
 
 pwd_file = 'pwd.txt'
+# ----------------------------
 
 
 class Api:
     password = '12345'
-    app = ""
+    app = None
 
     def __init__(self, password):
         self.password = password
@@ -16,6 +20,8 @@ class Api:
             print('password correct')
             self.app.destroy()
             sys.exit(0)
+        else:
+            print('password does not match...')
 
     def setApp(self, app):
         self.app = app
@@ -26,9 +32,25 @@ def read_pwd(input_file):
         return opened_file.read().strip()
 
 
+# -------------------Thread - close_app--------------------------------------
+
+def close_app(handle):
+    time.sleep(5)
+    print('checking password now...')
+    val = str(input("Enter Password: "))
+    handle.verifyPassword(val)
+# ------------------------------------------------------------------------
+
+
 if __name__ == '__main__':
+
     pwd = read_pwd(pwd_file)
+    print(pwd)
     api = Api(pwd)
-    view = webview.create_window('Full-screen window', 'view.html', fullscreen=True, js_api=api)
+    t1 = Thread(target=close_app, args=(api,),)
+    t1.daemon = True
+    t1.start()
+    view = webview.create_window('Full-screen window', 'view.html', fullscreen=False, js_api=api)
     api.setApp(view)
     webview.start()
+    print('END')
