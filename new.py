@@ -23,6 +23,6 @@ def read_pwd(input_file):
 if __name__ == '__main__':
     pwd = read_pwd(pwd_file)
     api = Api(pwd)
-    view = webview.create_window('Full-screen window', 'view.html', fullscreen=True, js_api=api)
+    view = webview.create_window('Full-screen window', 'view.html', fullscreen=False, js_api=api)
     api.setApp(view)
     webview.start()

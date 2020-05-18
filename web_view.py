@@ -6,7 +6,7 @@ pwd_file = 'pwd.txt'
 
 class Api:
     password = '12345'
-    app = None
+    app = ""
 
     def __init__(self, password):
         self.password = password
